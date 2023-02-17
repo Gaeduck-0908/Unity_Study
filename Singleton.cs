@@ -16,30 +16,25 @@ namespace lib
 
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour //제네릭 T 형식 제약 MonoBehaviour
     {
-        private static T _instance; //_instance 변수
+        private static T _instance;
 
         public static T Instance
         {
             get
             {
-                //instance != null 일시 return
                 if (_instance != null)
                 {
                     return _instance;
                 }
 
-                // 컴포넌트 타입으로 검색하여, 처음 발견한 오브젝트를 반환
                 _instance = FindObjectOfType(typeof(T)) as T;
 
-                //instacne == null 일시
                 if (_instance == null)
                 {
-                    //컴포넌트 가져옴
                     _instance = new GameObject(typeof(T).ToString()).AddComponent<T>();
                     DontDestroyOnLoad(_instance.gameObject);
                 }
 
-                //리턴
                 return _instance;
             }
         }
